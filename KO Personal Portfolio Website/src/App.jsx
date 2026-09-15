@@ -10,8 +10,9 @@ const profile = {
     'Supporting women in STEM has always been important to me, and I have been involved in the Phi Sigma Rho Engineering Sorority in various leadership roles.',
     'Outside of school, I enjoy finding the best local restaurants, karaoking with my friends, and teaching myself how to play guitar.',
   ],
-  linkedin: 'https://www.linkedin.com/in/kalistaoberes',
+  linkedin: 'https://www.linkedin.com/in/kalista-oberes/',
   github: 'https://github.com/kali-mari',
+  email: 'kalistaoberes@gmail.com'
 }
 
 const experiences = [
@@ -21,7 +22,7 @@ const experiences = [
       {
         title: 'Project Management Engineering Intern',
         date: 'May 2026 - Current',
-        description: 'Supporting manufacturing operations for modular cooling units built for hyperscale data centers, working across engineering, procurement, and the shop floor to keep production on schedule.',
+        description: 'Supporting manufacturing operations for modular cooling units built for hyperscale data centers, working across engineering, procurement, and the shop floor to keep production on schedule',
         highlights: [
           'Developed manufacturing schedules across 5 active projects using Microsoft Project, evaluating how long lead times for materials and components would affect project completion dates',
           'Mapped material locations from CAD drawings across 6 modules, organizing a manufacturing BOM by 9 process scopes to support procurement and shop floor operations',
@@ -37,7 +38,7 @@ const experiences = [
       {
         title: 'VP Finance',
         date: 'May 2025 - May 2026',
-        description: 'Owned a $52,000 annual operating budget for an 80+ member chapter, covering chapter expenses and national dues.',
+        description: 'Owned a $52,000 annual operating budget for an 80+ member chapter, covering chapter expenses and national dues',
         highlights: [
           'Allocated $4,000 in scholarship funding across 33 members',
           'Replaced ad hoc reporting with recurring expenditure and cash flow updates, giving members visibility into chapter spending',
@@ -46,11 +47,25 @@ const experiences = [
       {
         title: 'Sisterhood Chair',
         date: 'Jan. 2025 - May 2025',
-        description: 'Planned and ran an overnight retreat for 50+ members to build connection between new and returning sisters.',
+        description: 'Planned and ran an overnight retreat for 50+ members to build connection between new and returning sisters',
         highlights: [
           'Built and managed the budget for catering, activities, and accommodations',
           'Resolved on-site logistics in real time, from room assignments to last-minute communication issues',
         ],
+      },
+    ],
+  },
+  {
+    organization: 'Game-based Learning and Digital Experiences Laboratory',
+    roles: [
+      {
+        title: 'Student Researcher',
+        date: 'Sep. 2024 - Dec. 2024',
+        description: 'Developed interactive VR-ready statics learning content',
+        highlights: [
+        'Constructed and modeled interactive 3D statics problems using Onshape and Blender',
+        'Researched learning strategies that use 3D visualization to explain engineering concepts',
+      ],
       },
     ],
   },
@@ -107,24 +122,6 @@ const projects = [
     githubUrl: 'https://github.com/kali-mari/MyFlowFriend-Winkghacks2026',
       websiteUrl: '',
   },
-    {
-      title: 'Game-based Learning and Digital Experiences Laboratory',
-      image: 'glade.jpg',
-      date: 'Sept. 2024 - Dec. 2024',
-      description: 'A game-based learning project creating interactive engineering statics problems for a virtual reality environment.',
-      longDescription: 'As a Student Researcher, I explored how interactive 3D environments can support engineering education and help students understand statics concepts.',
-      skills: ['Onshape', 'Blender', 'Engineering education'],
-      solutionMethods: [
-        'Constructed and modeled interactive 3D statics problems using Onshape and Blender',
-        'Researched learning strategies that use 3D visualization to explain engineering concepts',
-      ],
-      results: [
-        'Developed interactive VR-ready statics learning content',
-        'Evaluated how 3D visualization techniques can improve comprehension of statics concepts',
-      ],
-      githubUrl: '',
-      websiteUrl: '',
-    },
 ]
 
 const skillGroups = [
