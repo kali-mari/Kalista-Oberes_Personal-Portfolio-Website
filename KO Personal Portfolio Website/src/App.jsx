@@ -38,10 +38,11 @@ const experiences = [
       {
         title: 'VP Finance',
         date: 'May 2025 - May 2026',
-        description: 'Owned a $52,000 annual operating budget for an 80+ member chapter, covering chapter expenses and national dues',
+        description: 'Owned a $52,000 annual operating budget for an 80+ member chapter, covering local chapter expenses for events and national dues',
         highlights: [
-          'Allocated $4,000 in scholarship funding across 33 members',
+          'Allocated $4,000 in scholarship funding for 33 members, improving member retention',
           'Replaced ad hoc reporting with recurring expenditure and cash flow updates, giving members visibility into chapter spending',
+          'Supported 2 memorabilia and 3 fundraising chairs in tracking merchandise sold and money raised through two new fundraising events that generated $1000+ in revenue for the chapter'
         ],
       },
       {
@@ -49,8 +50,8 @@ const experiences = [
         date: 'Jan. 2025 - May 2025',
         description: 'Planned and ran an overnight retreat for 50+ members to build connection between new and returning sisters',
         highlights: [
-          'Built and managed the budget for catering, activities, and accommodations',
-          'Resolved on-site logistics in real time, from room assignments to last-minute communication issues',
+          'Built and managed a $4500 budget for transportation, catering, activities, and accommodations for 2 days and 3 nights',
+          'Resolved on-site logistics in real time, from room assignments to last-minute communication issues to ensure a smooth experience for all attendees',
         ],
       },
     ],
@@ -220,9 +221,17 @@ function App() {
           <h2>About Me</h2>
           <div className="about-body">
             <div className="about-photo">
-              <img src="/about-photo.jpg" alt={`${profile.name} in a personal setting`} onError={(event) => { event.currentTarget.style.display = 'none' }} />
-              <span>Add your photo at<br /><strong>public/about-photo.jpg</strong></span>
-            </div>
+                <img
+                  src="/about-photo.jpg"
+                  alt={`${profile.name} in a personal setting`}
+                  onError={(event) => { event.currentTarget.style.display = 'none' }}
+                  onLoad={(event) => {
+                    const placeholder = event.currentTarget.nextElementSibling
+                    if (placeholder) placeholder.style.display = 'none'
+                  }}
+                />
+                <span>Add your photo at<br /><strong>public/about-photo.jpg</strong></span>
+              </div>
             <div className="bio-copy">
               {profile.bio.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
@@ -267,7 +276,7 @@ function App() {
         <div className="contact-content">
           <h2>Contact Me</h2>
           <p>I'd love to hear from you! Feel free to reach out.</p>
-          <div className="social-links contact-links"><a href={`mailto:${profile.email}`}>Email Me <span>-&gt;</span></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn <span>-&gt;</span></a></div>
+          <div className="social-links contact-links"><a href={`mailto:${profile.email}`}>Email Me <span>-&gt;</span></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a><a href="https://www.linkedin.com/in/kalista-oberes/" target="_blank" rel="noreferrer">LinkedIn <span>-&gt;</span></a></div>
         </div>
       </section>
 
