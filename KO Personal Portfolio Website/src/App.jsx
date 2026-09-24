@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import ProjectPage from './ProjectPage.jsx'
+
+function useHash() {
+  const [hash, setHash] = useState(window.location.hash)
+  useEffect(() => {
+    const onChange = () => setHash(window.location.hash)
+    window.addEventListener('hashchange', onChange)
+    return () => window.removeEventListener('hashchange', onChange)
+  }, [])
+  return hash
+}
 
 const profile = {
   name: 'Kalista Oberes',
@@ -75,6 +86,7 @@ const experiences = [
 const projects = [
 {
   title: 'OffTheCharts',
+  slug: 'off-the-charts',
   image: '/offthecharts.png',
   date: 'July 2026',
   description: 'Python CLI recommending songs by audio similarity — not popularity — across 90K Spotify tracks.',
@@ -83,46 +95,128 @@ const projects = [
   solutionMethods: [
     'Normalized 12 audio attributes per track into feature vectors across 90K tracks using pandas and NumPy',
     'Implemented k-d tree and max-heap nearest-neighbor search, exposed through a CLI',
-    'Built song search and selection with prompt_toolkit\'s WordCompleter for autocomplete input',
+    'Built song search and selection with prompt_toolkit’s WordCompleter for autocomplete input'
   ],
   results: [
     'Returns top 5 ranked songs from a 90K-track library',
-    'Surfaces niche tracks that popularity-based recommenders miss',
+    'Surfaces niche tracks that popularity-based recommenders miss'
   ],
+  story: [
+  {
+    type: 'text',
+    date: 'July 2026',
+    heading: 'Building the Recommendation Engine',
+    body: `I started OffTheCharts because I wanted a music recommender that ignored popularity and focused purely on audio similarity.
+
+  The first step was normalizing 12 audio features across 90K tracks. After that, I implemented a k‑d tree to make nearest‑neighbor search fast enough to run locally.`
+    },
+
+    {
+      type: 'image',
+      src: '/offthecharts.png',
+      caption: 'CLI interface showing ranked recommendations'
+    }
+  ],
+
   githubUrl: 'https://github.com/kali-mari/COP3530-Project-2-Off-the-Charts',
-  websiteUrl: '',
+  websiteUrl: ''
 },
-  {
-    title: '3D LiDAR Scanner',
-    image: '/3D-LiDAR.jpg',
-    date: 'Mar. 2026',
-    description: 'Lightweight, low-cost, 3D-printable LiDAR scanner with a two-axis servo and stepper motor positioning system',
-    longDescription: 'Designed a low-cost system mounting a Garmin LiDAR-Lite sensor on a two-axis gimbal to perform 3D scans of a space and visualize the output as a point cloud in Unity in 24 hours for the 2026 UF Association of Applied Computing Hackathon.',
-    skills: ['Onshape', '3D Printing'],
-    solutionMethods: ['Modeled the FDM components in Onshape with manufacturability and low print time in mind, keeping the geometry simple so it would integrate cleanly with the positional data pipeline later on', 'Used a stepper motor for yaw and a servo for pitch, giving the LiDAR a two-axis positioning system for full directional scanning'],
-    results: ['Reduced print time to under 3 hours for rapid prototyping', 'Enabled real-time point cloud visualization from the scanner hardware', 'Achieved full two-axis movement in a completed prototype post-hackathon'],
-    githubUrl: 'https://github.com/annahudson356/lidar-sensor-hardware-hack-2026',
-      websiteUrl: '',
-  },
-  {
-    title: 'MyFlowFriend',
-    image: '/myflowfriend.jpg',
+{
+  title: '3D LiDAR Scanner',
+  slug: '3d-lidar-scanner',
+  image: '/3D-LiDAR.jpg',
+  date: 'Mar. 2026',
+  description: 'Lightweight, low-cost, 3D-printable LiDAR scanner with a two-axis servo and stepper motor positioning system.',
+  longDescription: 'Designed a low-cost system mounting a Garmin LiDAR-Lite sensor on a two-axis gimbal to perform 3D scans of a space and visualize the output as a point cloud in Unity in 24 hours for the 2026 UF Association of Applied Computing Hackathon.',
+  skills: ['Onshape', '3D Printing'],
+  solutionMethods: [
+    'Modeled the FDM components in Onshape with manufacturability and low print time in mind',
+    'Used a stepper motor for yaw and a servo for pitch, giving the LiDAR a two-axis positioning system for full directional scanning'
+  ],
+  results: [
+    'Reduced print time to under 3 hours for rapid prototyping',
+    'Enabled real-time point cloud visualization from the scanner hardware',
+    'Achieved full two-axis movement in a completed prototype post-hackathon'
+  ],
+  githubUrl: 'https://github.com/annahudson356/lidar-sensor-hardware-hack-2026',
+  websiteUrl: ''
+},
+
+{
+  title: 'MyFlowFriend',
+  slug: 'myflowfriend',
+  image: '/myflowfriend.jpg',
+  date: 'Feb. 2026',
+  description: 'Tamagotchi-inspired period-tracking device that logs daily menstrual symptoms via an ESP32 microcontroller, paired with a mobile app that visualizes long-term health trends.',
+  longDescription: 'Created in 36 hours for the 2026 WiNGHacks hackathon, MyFlowFriend pairs a Tamagotchi-inspired Wi-Fi device with a React Native companion app. Users can track symptoms over 30 days, view their history in a calendar-style interface, and receive AI-assisted cycle forecasts and health answers.',
+  skills: ['React Native (Expo)', 'Firebase', 'Gemini API'],
+  solutionMethods: [
+    'Stored user input from ESP32 microcontroller in Firebase',
+    'Designed UI for viewing past 30 entries for flow, pain, sleep, and mood symptoms in a calendar-style interface in a React Native app',
+    'Used Gemini 2.5 Flash to predict future cycles based on flow data and for a menstrual chat bot'
+  ],
+  results: [
+    'Real-time symptom tracking and visualization for users due to backend integration with Firebase',
+    'Won the WiNGHacks Women-Centric Track Award against 29 competing projects'
+  ],
+  story: [
+ {
+    type: 'text',
     date: 'Feb. 2026',
-    description: 'Tamagotchi-inspired period-tracking device that logs daily menstrual symptoms via an ESP32 microcontroller, paired with a mobile app that visualizes long-term health trends',
-    longDescription: 'Created in 36 hours for the 2026 WiNGHacks hackathon, MyFlowFriend pairs a Tamagotchi-inspired Wi-Fi device with a React Native companion app. Users can track symptoms over 30 days, view their history in a calendar-style interface, and receive AI-assisted cycle forecasts and health answers.',
-    skills: ['React Native (Expo)', 'Firebase', 'Gemini API'],
-    solutionMethods: [
-      'Stored user input from ESP32 microcontroller in Firebase',
-      'Designed UI for viewing past 30 entries for flow, pain, sleep, and mood symptoms in a calendar-style interface in a React Native app',
-      'Used Gemini 2.5 Flash to predict future cycles based on flow data and for a menstrual chat bot',
-    ],
-    results: [
-        'Real-time symptom tracking and visualization for users due to backend integration with Firebase',
-        'Won the WiNGHacks Women-Centric Track Award against 29 competing projects',
-    ],
-    githubUrl: 'https://github.com/kali-mari/MyFlowFriend-Winkghacks2026',
-      websiteUrl: '',
+    heading: 'The Idea',
+    body: `My teammate and I went into WiNGHacks knowing we wanted to build something centered on women’s health, especially since the hackathon highlights women in tech. The idea to gamify menstrual tracking came from a conversation about how difficult it is to stay consistent with our health as busy college students. We both understood how important symptom tracking is, but every menstrual app we had tried felt boring, easy to ignore, and never motivating enough to use regularly. That led us to a simple question: how could we make daily health tracking feel engaging instead of tedious?
+
+We ended up drawing inspiration from Tamagotchis, small virtual pets that need attention every day. Their playful, low stakes design sparked the concept for MyFlowFriend: a menstrual tracking device that encourages daily check ins by making the experience feel more fun, interactive, and rewarding.`
   },
+
+  {
+    type: 'text',
+    heading: 'Determining the Tech Stack',
+    body: `Since this was my first hackathon, I started by building the mobile app. After researching beginner friendly options, React Native stood out as the easiest way to get a cross platform app running quickly. We wanted the app to update automatically whenever users logged symptoms on the hardware companion, so Firebase became the natural choice for the backend because of its real time syncing.
+
+Because this was the first mobile app I had ever built, working with API calls for Firebase and Gemini Flash was completely new to me. Once I learned how to make those calls reliably, we integrated Gemini Flash 2.5 to serve as a conversational chatbot and to generate future cycle forecasts, a feature included in most menstrual tracking apps.`
+  },
+
+  {
+    type: 'text',
+    heading: 'Designing the Mobile App',
+    body: `The mobile app uses a pastel, Y2K inspired aesthetic based on the era when Tamagotchis were popular. Each symptom category — flow, pain, sleep, and mood — has its own page with a 30 day grid showing the user’s entries. Designing this interface taught me a lot about mobile UI patterns, visual hierarchy, and how to make health data feel approachable rather than clinical.
+
+Because this was my first mobile app, I ran into several issues while integrating Firebase and Gemini Flash. Debugging API calls became a major part of the design process — from handling asynchronous updates to making sure the app refreshed symptom data the moment the hardware device sent new logs. Working through those challenges helped me understand how the frontend and backend communicate and how to design screens that respond smoothly to real time data.`
+  },
+
+  {
+    type: 'text',
+    heading: 'Accomplishments',
+    body: `By the end of the 36 hour hackathon, we had the hardware and mobile app communicating seamlessly. When users entered their data into the hardware component and saved it, the backend automatically updated the mobile app in real time. We tested and demoed the system using dummy data to show the full workflow.
+
+The mobile app included display screens for all four symptoms, generated cycle predictions, and demonstrated the chatbot functionality. On the hardware side, my teammate built a Tamagotchi inspired device using an ESP32 that let users log symptoms through simple daily interactions. The device sent each entry over Wi Fi to Firebase, where my app immediately pulled and displayed the updated data. Seeing both components sync instantly was one of the most rewarding moments of the weekend.
+
+Even though the hardware added a fun, nostalgic element to the project, the mobile app became the central place where users could see and understand their health data. The UI, cycle predictions, and chatbot features tied the whole experience together and made the hardware feel purposeful rather than just playful.
+
+We also outlined several improvements we want to make to the hardware moving forward. We plan to design and 3D print a portable, ergonomic housing for the device, and eventually power it with a 3.7V Li Po battery paired with a TP4056 charge and protection module. These upgrades would make the Tamagotchi fully portable and rechargeable, strengthening the connection between the physical device and the mobile app.
+
+Beyond the technical milestones, we had created a project that we would want to use. Our demo resonated with judges and attendees, and we ultimately took home the Women Centric Track award.`
+  },
+
+  {
+    type: 'text',
+    heading: 'Lessons Learned',
+    body: `I learned the fundamentals of mobile app development in React Native in a single weekend, including UI design, API integration, and real time data handling. I also gained a better understanding of how to scope a hackathon project and realized that with the right focus, you can accomplish far more in 36 hours than you expect.`
+  },
+
+  {
+    type: 'gallery',
+    images: [
+      { src: '/myflowfriend.jpg', caption: 'Device prototype' },
+      { src: '/myflowfriend-app.png', caption: 'Mobile app interface' }
+      ]
+    }
+  ],
+  githubUrl: 'https://github.com/kali-mari/MyFlowFriend-Winkghacks2026',
+  websiteUrl: ''
+}
+
 ]
 
 const skillGroups = [
@@ -130,8 +224,6 @@ const skillGroups = [
   { label: 'Languages & Frameworks', icon: '</>', skills: ['C++', 'Python', 'Java', 'MATLAB', 'Git', 'NumPy', 'pandas', 'React Native (Expo)', 'Firebase'] },
   { label: 'Project Management', icon: '▦', skills: ['Microsoft Project', 'JD Edwards', 'Procore'] },
 ]
-
-
 
 function ProjectCard({ project }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -161,8 +253,9 @@ function ProjectCard({ project }) {
           <div className="project-section"><h4>Skills used</h4><div className="skills">{project.skills.map((skill) => <span key={skill}>{skill}</span>)}</div></div>
           <button className="project-details-button" type="button" onClick={() => setIsOpen(true)}>View project details <span>-&gt;</span></button>
           <div className="project-links">
-            {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
+             {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
               {(project.websiteUrl || project.liveUrl) && <a href={project.websiteUrl || project.liveUrl} target="_blank" rel="noreferrer">Project website <span>-&gt;</span></a>}
+              {project.slug && <a href={`#/projects/${project.slug}`}>Full project story <span>-&gt;</span></a>}
           </div>
         </div>
       </div>
@@ -190,7 +283,21 @@ function ProjectCard({ project }) {
   )
 }
 
+
+
 function App() {
+
+  const hash = useHash()
+  const slug = hash.match(/^#\/projects\/(.+)$/)?.[1]
+  const activeProject = projects.find((p) => p.slug === slug)
+
+  useEffect(() => {
+    if (activeProject) window.scrollTo(0, 0)
+    else if (hash && !hash.startsWith('#/')) document.getElementById(hash.slice(1))?.scrollIntoView()
+  }, [hash, activeProject])
+
+  if (activeProject) return <ProjectPage project={activeProject} />
+
   return (
     <main>
       <header className="site-header page-width">
