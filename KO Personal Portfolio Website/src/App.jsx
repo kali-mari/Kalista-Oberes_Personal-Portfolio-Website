@@ -102,24 +102,38 @@ const projects = [
     'Surfaces niche tracks that popularity-based recommenders miss'
   ],
   story: [
-  {
-    type: 'text',
-    date: 'July 2026',
-    heading: 'Building the Recommendation Engine',
-    body: `I started OffTheCharts because I wanted a music recommender that ignored popularity and focused purely on audio similarity.
+  {type: 'text',
+    heading: 'The Idea',
+    body: `This project was for the Data Structures and Algorithms course at UF. The assignment required us to implement two data structures to parse a large dataset and compare their efficiency. After exploring publicly available datasets and proposing different ideas, our team decided to use a Spotify dataset. We were frustrated with how most music recommendation algorithms prioritize popularity, pushing mainstream songs and artists to the top of every list. We wanted to build a recommendation system that surfaced songs based on audio similarity rather than chart position, helping users discover new music they might not have found otherwise.`
+  },
 
-  The first step was normalizing 12 audio features across 90K tracks. After that, I implemented a k‑d tree to make nearest‑neighbor search fast enough to run locally.`
-    },
+  {type: 'text',
+    heading: 'Data Preparation',
+    body: `My main responsibility at the start of the project was preparing the dataset. I pulled the raw Spotify data from Kaggle and wrote Python scripts to clean it, remove duplicates, and filter out incomplete entries. Because the dataset contained tens of thousands of tracks, even small inconsistencies created major issues downstream, so I spent time normalizing the audio features and ensuring every song had a complete, usable profile.\n\n
+    A major part of my role was figuring out how to characterize each song numerically. I selected a set of audio attributes (including tempo, energy, danceability, acousticness, and instrumentalness) and combined them into a single feature vector. This gave us a consistent way to compare songs mathematically and measure similarity in a meaningful way.`
+  },
 
-    {
-      type: 'image',
-      src: '/offthecharts.png',
-      caption: 'CLI interface showing ranked recommendations'
-    }
-  ],
+  {type: 'text',
+    heading: 'Building the CLI Interface',
+    body: `Once the dataset was ready, I focused on building the command-line interface that users would interact with. I designed the CLI to feel intuitive and responsive, even with a dataset of over 90,000 tracks. To simplify searching, I integrated a real-time autocomplete feature using an existing library instead of building one from scratch. This approach saved development time and gave the interface a polished, professional feel.`
+  },
+
+  {type: 'text',
+    heading: 'Accomplishments',
+    body: `By the end of the project, we had a fully functional recommendation system capable of returning the top five most similar songs to any track in the dataset. The CLI I built made the tool easy to use, and the autocomplete feature significantly improved the user experience.\n\n
+    The feature vector design I implemented allowed the system to surface niche tracks that popularity-based algorithms would never recommend. Seeing the recommendations match our expectations was one of the most rewarding parts of the project.`
+  },
+
+  {type: 'text',
+    heading: 'Lessons Learned',
+    body: `This project taught me how to work with large datasets and design meaningful feature vectors for real-world applications. I also gained hands-on experience with Git and GitHub—especially resolving merge conflicts when multiple teammates were modifying the same files.\n\n
+    Another key takeaway was learning when to rely on existing libraries. Integrating a pre-built autocomplete library saved time and made the CLI feel more polished than anything we could have built from scratch within the project timeline. Overall, this project strengthened my understanding of algorithmic design and showed me how data structures directly impact the usability and performance of real applications.`
+  },
+
+  {type: 'video', youtubeId: 'ibyIf6aCOUQ'}
+],
 
   githubUrl: 'https://github.com/kali-mari/COP3530-Project-2-Off-the-Charts',
-  websiteUrl: ''
 },
 {
   title: '3D LiDAR Scanner',
@@ -138,8 +152,34 @@ const projects = [
     'Enabled real-time point cloud visualization from the scanner hardware',
     'Achieved full two-axis movement in a completed prototype post-hackathon'
   ],
+  story :[
+    {type: 'text',
+      heading: 'The Idea',
+      body: 'One of our teammates originally owned the LiDAR sensor and had been wanting to use it for a 3D scanning project. When the UF Association of Applied Computing and Engineering announced they were hosting their inaugural hardware hackathon, it felt like the perfect opportunity to finally build it. We assembled a team with both mechanical and hardware experience, combining our backgrounds to take on a project more ambitious in design than any of us could have attempted individually.'
+    },
+    {type: 'text',
+      heading: 'Collaboration',
+      body: `The most challenging part of this project was learning how to collaborate effectively across the mechanical and hardware teams. Our group of four was split evenly between two mechanical engineers and two hardware engineers, and early on, the other mechanical engineer and I struggled to communicate our design ideas clearly. We realized that to make progress, we needed to be far more direct and specific in our discussions. Instead of using broad terms like “rotational motion,” we defined exactly what we meant by “pitch” and “yaw,” and we spent more time creating detailed sketches to illustrate our concepts. Once we aligned on terminology and communication style, we discovered that our initial individual designs were actually quite similar.`
+    },
+    {type: 'text',
+      heading: 'Mechanical Design',
+      body: `The mechanical design needed to be simple, fast to fabricate, and easy to iterate within the 24‑hour hackathon window. Because print time directly limited how many redesigns we could attempt, we focused on creating geometries that were lightweight and optimized for rapid 3D printing. At the same time, the structure had to integrate cleanly with the hardware team’s electronics, so we avoided complex assemblies and ensured that all mounting points aligned directly with the motors and LiDAR unit.\n\n
+            A key functional requirement was achieving two axes of motion to enable full 3D scanning rather than a basic 2D sweep. The pitch axis was obtained by mounting the LiDAR directly onto a servo, giving us a straightforward and reliable way to control vertical rotation. For yaw, we designed a pair of 3D‑printed gears with a 1:1 gear ratio. This kept the mechanism simple and allowed the motor’s rotation to correspond directly to the LiDAR’s yaw angle without additional gearing calculations or compensation in software.`
+    },
+    {type: 'text',
+      heading: 'Accomplishments',
+      body: `By the end of the hackathon, we had a partially working prototype that demonstrated the core functionality of our 3D scanning system. We were able to show both pitch and yaw motion and visualize the LiDAR’s distance data in Unity as a point cloud. However, we ran out of time to fully test the mechanical design, and the 3D‑printed gears did not have enough tolerance to rotate smoothly on the axles built into the printed housing. \n\n
+            After the hackathon, we revisited the design and created a fully functional prototype. We redesigned the gears with increased tolerance and printed a more robust housing to better support the axles. The updated assembly achieved smooth rotation and accurate scanning, demonstrating the potential of our low‑cost, 3D‑printable LiDAR scanner.`
+    },
+    {type: 'text',
+      heading: 'Lessons Learned',
+      body: `This project taught me how to design mechanical systems for rapid prototyping while keeping hardware requirements in mind. Even though I wanted a more elaborate and robust design, a hackathon is not the best environment for complexity. Limited time to print and test meant I had to prioritize manufacturability and compatibility. Staying ahead of scope creep allowed us to achieve a partial prototype within the hackathon window.\n\n
+            Another key takeaway was the importance of clear communication and shared terminology when collaborating with a team. By defining our terms and using sketches to illustrate our ideas, we were able to align on a common vision and move forward more effectively. One factor that made our project successful was having a team lead who acted as a systems engineer. Because they understood both the hardware and mechanical requirements, they served as a bridge between the two teams and prevented misalignment. Having a systems engineer was crucial in grounding the project and ensuring our designs remained compatible.`
+    },
+    {type: 'video', youtubeID: 'h_uVNsXJl7M'}
+  ],
   githubUrl: 'https://github.com/annahudson356/lidar-sensor-hardware-hack-2026',
-  websiteUrl: ''
+  websiteUrl: 'https://www.hackathonparty.com/hackathons/40/projects/471'
 },
 
 {
@@ -162,41 +202,33 @@ const projects = [
   story: [
  {
     type: 'text',
-    date: 'Feb. 2026',
     heading: 'The Idea',
-    body: `My teammate and I went into WiNGHacks knowing we wanted to build something centered on women’s health, especially since the hackathon highlights women in tech. The idea to gamify menstrual tracking came from a conversation about how difficult it is to stay consistent with our health as busy college students. We both understood how important symptom tracking is, but every menstrual app we had tried felt boring, easy to ignore, and never motivating enough to use regularly. That led us to a simple question: how could we make daily health tracking feel engaging instead of tedious?
-
-We ended up drawing inspiration from Tamagotchis, small virtual pets that need attention every day. Their playful, low stakes design sparked the concept for MyFlowFriend: a menstrual tracking device that encourages daily check ins by making the experience feel more fun, interactive, and rewarding.`
+    body: `My teammate and I went into WiNGHacks knowing we wanted to build something centered on women’s health, especially since the hackathon highlights women in tech. The idea to gamify menstrual tracking came from a conversation about how difficult it is to stay consistent with our health as busy college students. We both understood how important symptom tracking is, but every menstrual app we had tried felt boring, easy to ignore, and never motivating enough to use regularly. That led us to a simple question: how could we make daily health tracking feel engaging instead of tedious?\n\n
+          We ended up drawing inspiration from Tamagotchis, small virtual pets that need attention every day. Their playful, low stakes design sparked the concept for MyFlowFriend: a menstrual tracking device that encourages daily check ins by making the experience feel more fun, interactive, and rewarding.`
   },
 
   {
     type: 'text',
     heading: 'Determining the Tech Stack',
-    body: `Since this was my first hackathon, I started by building the mobile app. After researching beginner friendly options, React Native stood out as the easiest way to get a cross platform app running quickly. We wanted the app to update automatically whenever users logged symptoms on the hardware companion, so Firebase became the natural choice for the backend because of its real time syncing.
-
-Because this was the first mobile app I had ever built, working with API calls for Firebase and Gemini Flash was completely new to me. Once I learned how to make those calls reliably, we integrated Gemini Flash 2.5 to serve as a conversational chatbot and to generate future cycle forecasts, a feature included in most menstrual tracking apps.`
+    body: `Since this was my first hackathon, I started by building the mobile app. After researching beginner friendly options, React Native stood out as the easiest way to get a cross platform app running quickly. We wanted the app to update automatically whenever users logged symptoms on the hardware companion, so Firebase became the natural choice for the backend because of its real time syncing.\n\n
+          Because this was the first mobile app I had ever built, working with API calls for Firebase and Gemini Flash was completely new to me. Once I learned how to make those calls reliably, we integrated Gemini Flash 2.5 to serve as a conversational chatbot and to generate future cycle forecasts, a feature included in most menstrual tracking apps.`
   },
 
   {
     type: 'text',
     heading: 'Designing the Mobile App',
-    body: `The mobile app uses a pastel, Y2K inspired aesthetic based on the era when Tamagotchis were popular. Each symptom category — flow, pain, sleep, and mood — has its own page with a 30 day grid showing the user’s entries. Designing this interface taught me a lot about mobile UI patterns, visual hierarchy, and how to make health data feel approachable rather than clinical.
-
-Because this was my first mobile app, I ran into several issues while integrating Firebase and Gemini Flash. Debugging API calls became a major part of the design process — from handling asynchronous updates to making sure the app refreshed symptom data the moment the hardware device sent new logs. Working through those challenges helped me understand how the frontend and backend communicate and how to design screens that respond smoothly to real time data.`
+    body: `The mobile app uses a pastel, Y2K inspired aesthetic based on the era when Tamagotchis were popular. Each symptom category — flow, pain, sleep, and mood — has its own page with a 30 day grid showing the user’s entries. Designing this interface taught me a lot about mobile UI patterns, visual hierarchy, and how to make health data feel approachable rather than clinical.\n\n
+          Because this was my first mobile app, I ran into several issues while integrating Firebase and Gemini Flash. Debugging API calls became a major part of the design process — from handling asynchronous updates to making sure the app refreshed symptom data the moment the hardware device sent new logs. Working through those challenges helped me understand how the frontend and backend communicate and how to design screens that respond smoothly to real time data.`
   },
 
   {
     type: 'text',
     heading: 'Accomplishments',
-    body: `By the end of the 36 hour hackathon, we had the hardware and mobile app communicating seamlessly. When users entered their data into the hardware component and saved it, the backend automatically updated the mobile app in real time. We tested and demoed the system using dummy data to show the full workflow.
-
-The mobile app included display screens for all four symptoms, generated cycle predictions, and demonstrated the chatbot functionality. On the hardware side, my teammate built a Tamagotchi inspired device using an ESP32 that let users log symptoms through simple daily interactions. The device sent each entry over Wi Fi to Firebase, where my app immediately pulled and displayed the updated data. Seeing both components sync instantly was one of the most rewarding moments of the weekend.
-
-Even though the hardware added a fun, nostalgic element to the project, the mobile app became the central place where users could see and understand their health data. The UI, cycle predictions, and chatbot features tied the whole experience together and made the hardware feel purposeful rather than just playful.
-
-We also outlined several improvements we want to make to the hardware moving forward. We plan to design and 3D print a portable, ergonomic housing for the device, and eventually power it with a 3.7V Li Po battery paired with a TP4056 charge and protection module. These upgrades would make the Tamagotchi fully portable and rechargeable, strengthening the connection between the physical device and the mobile app.
-
-Beyond the technical milestones, we had created a project that we would want to use. Our demo resonated with judges and attendees, and we ultimately took home the Women Centric Track award.`
+    body: `By the end of the 36 hour hackathon, we had the hardware and mobile app communicating seamlessly. When users entered their data into the hardware component and saved it, the backend automatically updated the mobile app in real time. We tested and demoed the system using dummy data to show the full workflow. \n\n
+          The mobile app included display screens for all four symptoms, generated cycle predictions, and demonstrated the chatbot functionality. On the hardware side, my teammate built a Tamagotchi inspired device using an ESP32 that let users log symptoms through simple daily interactions. The device sent each entry over WiFi to Firebase, where my app immediately pulled and displayed the updated data. Seeing both components sync instantly was one of the most rewarding moments of the weekend. \n\n
+          Even though the hardware added a fun, nostalgic element to the project, the mobile app became the central place where users could see and understand their health data. The UI, cycle predictions, and chatbot features tied the whole experience together and made the hardware feel purposeful rather than just playful. \n\n
+          We also outlined several improvements we want to make to the hardware moving forward. We plan to design and 3D print a portable, ergonomic housing for the device, and eventually power it with a 3.7V Li Po battery paired with a TP4056 charge and protection module. These upgrades would make the Tamagotchi fully portable and rechargeable, strengthening the connection between the physical device and the mobile app.\n\n
+          Beyond the technical milestones, we had created a project that we would want to use. Our demo resonated with judges and attendees, and we ultimately took home the Women Centric Track award.`
   },
 
   {
@@ -204,17 +236,13 @@ Beyond the technical milestones, we had created a project that we would want to 
     heading: 'Lessons Learned',
     body: `I learned the fundamentals of mobile app development in React Native in a single weekend, including UI design, API integration, and real time data handling. I also gained a better understanding of how to scope a hackathon project and realized that with the right focus, you can accomplish far more in 36 hours than you expect.`
   },
+  
+  { type: 'video', youtubeId: 'hejCKkAaBac'}
+  ,
 
-  {
-    type: 'gallery',
-    images: [
-      { src: '/myflowfriend.jpg', caption: 'Device prototype' },
-      { src: '/myflowfriend-app.png', caption: 'Mobile app interface' }
-      ]
-    }
   ],
   githubUrl: 'https://github.com/kali-mari/MyFlowFriend-Winkghacks2026',
-  websiteUrl: ''
+  websiteUrl: 'https://devpost.com/software/my-flowfriend'
 }
 
 ]
@@ -287,11 +315,11 @@ function ProjectCard({ project }) {
 
 
 const NOW_UPDATED = 'Oct. 2026'
-
 // Upcoming events. `end` is 'YYYY-MM-DD'; the card hides itself after that day.
 // Leave `end` empty to keep it up. `date`, `location`, `note`, `url` are optional.
 const upcoming = [
-  { title: 'SwampHacks', type: 'Hackathon', date: '', location: '', note: '', end: '', url: '' },
+  { title: 'SwampHacks', date: 'Oct. 2026', location: '', note: '', end: '', url: '' },
+  { title: 'Senior Design Project', date: 'Aug. 2026 - Dec. 2026', location: '', note: '', end: '', url: '' }
 ]
 
 function NowPanel() {
