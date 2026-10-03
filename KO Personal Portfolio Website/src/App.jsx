@@ -251,11 +251,13 @@ function ProjectCard({ project }) {
           <div className="project-heading"><h3>{project.title}</h3></div>
           <p className="project-description">{project.description}</p>
           <div className="project-section"><h4>Skills used</h4><div className="skills">{project.skills.map((skill) => <span key={skill}>{skill}</span>)}</div></div>
-          <button className="project-details-button" type="button" onClick={() => setIsOpen(true)}>View project details <span>-&gt;</span></button>
-          <div className="project-links">
-             {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
-              {(project.websiteUrl || project.liveUrl) && <a href={project.websiteUrl || project.liveUrl} target="_blank" rel="noreferrer">Project website <span>-&gt;</span></a>}
-              {project.slug && <a href={`#/projects/${project.slug}`}>Full project story <span>-&gt;</span></a>}
+          <div className="project-actions">
+            <button className="project-details-button" type="button" onClick={() => setIsOpen(true)}>View project details <span>-&gt;</span></button>
+            <div className="project-links">
+               {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
+                {(project.websiteUrl || project.liveUrl) && <a href={project.websiteUrl || project.liveUrl} target="_blank" rel="noreferrer">Project website <span>-&gt;</span></a>}
+                {project.slug && <a href={`#/projects/${project.slug}`}>Full project story <span>-&gt;</span></a>}
+            </div>
           </div>
         </div>
       </div>
@@ -284,6 +286,71 @@ function ProjectCard({ project }) {
 }
 
 
+const NOW_UPDATED = 'Oct. 2026'
+
+// Upcoming events. `end` is 'YYYY-MM-DD'; the card hides itself after that day.
+// Leave `end` empty to keep it up. `date`, `location`, `note`, `url` are optional.
+const upcoming = [
+  { title: 'SwampHacks', type: 'Hackathon', date: '', location: '', note: '', end: '', url: '' },
+]
+
+function NowPanel() {
+  const roles = experiences.flatMap((exp) =>
+    exp.roles
+      .filter((role) => /current/i.test(role.date))
+      .map((role) => ({ ...role, organization: exp.organization }))
+  )
+  const building = projects.filter((p) => p.status === 'in-progress')
+  const today = new Date().toISOString().slice(0, 10)
+  const events = upcoming.filter((event) => !event.end || event.end >= today)
+
+  return (
+    <aside className="now-panel" aria-labelledby="now-title">
+      <div className="now-header">
+        <h2 id="now-title">Right Now</h2>
+        <span className="now-updated"><i aria-hidden="true" />Updated {NOW_UPDATED}</span>
+      </div>
+
+      <div className="now-grid">
+        {roles.map((role) => (
+          <a className="now-card" href="#experience" key={role.title}>
+            <span className="now-label">Working</span>
+            <h3>{role.organization}</h3>
+            <p className="now-org">{role.title}</p>
+            <p>{role.description}</p>
+          </a>
+        ))}
+
+        {building.map((project) => {
+          const latest = [...(project.story || [])].reverse().find((b) => b.date)
+          const href = project.slug ? `#/projects/${project.slug}` : '#projects'
+          return (
+            <a className="now-card" href={href} key={project.title}>
+              <span className="now-label">Building</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              {latest && <p className="now-update">{latest.date} · {latest.heading}</p>}
+            </a>
+          )
+        })}
+
+        {events.map((event) => {
+          const Tag = event.url ? 'a' : 'div'
+          const linkProps = event.url ? { href: event.url, target: '_blank', rel: 'noreferrer' } : {}
+          const when = [event.date, event.location].filter(Boolean).join(' · ')
+          return (
+            <Tag className="now-card" key={event.title} {...linkProps}>
+              <span className="now-label">Upcoming · {event.type}</span>
+              <h3>{event.title}</h3>
+              {when && <p className="now-org">{when}</p>}
+              {event.note && <p>{event.note}</p>}
+            </Tag>
+          )
+        })}
+      </div>
+    </aside>
+  )
+}
 
 function App() {
 
@@ -292,7 +359,7 @@ function App() {
   const activeProject = projects.find((p) => p.slug === slug)
 
   useEffect(() => {
-    if (activeProject) window.scrollTo(0, 0)
+    if (activeProject) window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     else if (hash && !hash.startsWith('#/')) document.getElementById(hash.slice(1))?.scrollIntoView()
   }, [hash, activeProject])
 
@@ -303,56 +370,25 @@ function App() {
       <header className="site-header page-width">
         <a className="logo" href="#top">KO<span>.</span></a>
         <nav aria-label="Main navigation">
-          <a href="#about">About</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
       </header>
 
       <section className="intro page-width" id="top">
         <div className="intro-content">
-          <p className="eyebrow">{profile.role} / Portfolio</p>
           <h1>Hi, I&apos;m <span>{profile.name.split(' ')[0]}.</span></h1>
           <p className="intro-copy">{profile.intro}</p>
+          <div className="profile-photo">
+            <img src="/Profile.jpg" alt={`${profile.name} portrait`} onError={(event) => { event.currentTarget.style.display = 'none' }} />
+            <span>Add your photo at<br /><strong>public/profile.jpg</strong></span>
+          </div>
           <a className="button-link" href="#projects">See my projects <span>-&gt;</span></a>
         </div>
-        <div className="profile-photo">
-          <img src="/Profile.jpg" alt={`${profile.name} portrait`} onError={(event) => { event.currentTarget.style.display = 'none' }} />
-          <span>Add your photo at<br /><strong>public/profile.jpg</strong></span>
-        </div>
-      </section>
-
-      <section className="about page-width section" id="about">
-        <div className="about-content">
-          <h2>About Me</h2>
-          <div className="about-body">
-            <div className="about-photo">
-                <img
-                  src="/about-photo.jpg"
-                  alt={`${profile.name} in a personal setting`}
-                  onError={(event) => { event.currentTarget.style.display = 'none' }}
-                  onLoad={(event) => {
-                    const placeholder = event.currentTarget.nextElementSibling
-                    if (placeholder) placeholder.style.display = 'none'
-                  }}
-                />
-                <span>Add your photo at<br /><strong>public/about-photo.jpg</strong></span>
-              </div>
-            <div className="bio-copy">
-              {profile.bio.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
-          </div>
-        </div>
-        <div className="skills-content">
-          <h3>Skills</h3>
-          <div className="skill-groups">
-            {skillGroups.map((group) => <div className="skill-group" key={group.label}>
-              <h4>{group.label}</h4>
-              <div className="skills">{group.skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
-            </div>)}
-          </div>
-        </div>
+        <NowPanel />
       </section>
 
       <section className="experience page-width section" id="experience">
@@ -376,6 +412,48 @@ function App() {
         <div className="projects-content">
           <h2>My Projects</h2>
           <div className="project-list">{projects.map((project) => <ProjectCard key={project.title} project={project} />)}</div>
+        </div>
+      </section>
+
+      <section className="skills-section page-width section" id="skills">
+        <div className="skills-section-content">
+          <h2>Skills</h2>
+          <div className="skill-groups">
+            {skillGroups.map((group) => (
+              <div className="skill-group" key={group.label}>
+                <h4>{group.label}</h4>
+                <div className="skills">
+                  {group.skills.map((skill) => (
+                    <span key={skill}>{skill}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      <section className="about page-width section" id="about">
+        <div className="about-content">
+          <h2>About Me</h2>
+          <div className="about-body">
+            <div className="about-photo">
+                <img
+                  src="/about-photo.jpg"
+                  alt={`${profile.name} in a personal setting`}
+                  onError={(event) => { event.currentTarget.style.display = 'none' }}
+                  onLoad={(event) => {
+                    const placeholder = event.currentTarget.nextElementSibling
+                    if (placeholder) placeholder.style.display = 'none'
+                  }}
+                />
+                <span>Add your photo at<br /><strong>public/about-photo.jpg</strong></span>
+              </div>
+            <div className="bio-copy">
+              {profile.bio.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+          </div>
         </div>
       </section>
 
