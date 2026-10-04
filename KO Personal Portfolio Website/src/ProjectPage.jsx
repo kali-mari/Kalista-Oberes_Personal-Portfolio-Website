@@ -1,10 +1,31 @@
-function Block({ block }) {
+import Reveal from './Reveal.jsx'
+
+const hasPhoto = (block) => block.type === 'text' && Boolean(block.image)
+
+function Paragraphs({ body }) {
+  return body
+    .split('\n\n')
+    .map((para) => para.trim())
+    .filter(Boolean)
+    .map((para, i) => <p key={i}>{para}</p>)
+}
+
+function Block({ block, imageSide }) {
   if (block.type === 'text') {
+    const photo = hasPhoto(block)
     return (
-      <section className="story-block story-text">
-        {block.date && <span className="story-date">{block.date}</span>}
-        {block.heading && <h2>{block.heading}</h2>}
-        {block.body.split('\n\n').map((para) => <p key={para}>{para}</p>)}
+      <section className={`story-block story-text${photo ? ` story-split story-split-${imageSide}` : ''}`}>
+        <div className="story-copy">
+          {block.date && <span className="story-date">{block.date}</span>}
+          {block.heading && <h2>{block.heading}</h2>}
+          <Paragraphs body={block.body} />
+        </div>
+        {photo && (
+          <figure className="story-photo">
+            <img src={block.image} alt={block.alt || block.caption || ''} loading="lazy" />
+            {block.caption && <figcaption>{block.caption}</figcaption>}
+          </figure>
+        )}
       </section>
     )
   }
@@ -31,7 +52,7 @@ function Block({ block }) {
     )
   }
 
-  if (block.type === 'video') {
+  if (block.type === 'video' && block.youtubeId) {
     return (
       <figure className="story-block story-figure">
         <div className="story-video">
@@ -54,35 +75,44 @@ function Block({ block }) {
 function ProjectPage({ project }) {
   const story = project.story || []
   const collaborators = project.collaborators || []
+  const skills = project.skills || []
+
+  // First photo block goes right, second goes left, and so on.
+  // Only text blocks with an image count toward the alternation.
+  const sideFor = (index) =>
+    story.slice(0, index).filter(hasPhoto).length % 2 === 0 ? 'right' : 'left'
 
   return (
     <main>
       <header className="site-header page-width">
         <a className="logo" href="#top">KO<span>.</span></a>
         <nav aria-label="Main navigation">
-          <a href="#projects">&larr; All projects</a>
+          <a className="back-button" href="#projects">&larr; All projects</a>
         </nav>
       </header>
 
       <article className="project-page page-width">
         <div className="project-meta">
-          <span>{project.status === 'in-progress' ? 'In progress' : 'Completed'}</span>
           <span>{project.date}</span>
         </div>
         <h1>{project.title}</h1>
         <p className="project-page-summary">{project.description}</p>
-        <div className="skills">{project.skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
+        {skills.length > 0 && <div className="skills">{skills.map((skill) => <span key={skill}>{skill}</span>)}</div>}
         <div className="project-links">
           {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
           {(project.websiteUrl || project.liveUrl) && <a href={project.websiteUrl || project.liveUrl} target="_blank" rel="noreferrer">Project website <span>-&gt;</span></a>}
         </div>
 
         <div className="story">
-          {story.map((block, index) => <Block block={block} key={`${block.type}-${index}`} />)}
+          {story.map((block, index) => (
+            <Reveal key={`${block.type}-${index}`}>
+              <Block block={block} imageSide={sideFor(index)} />
+            </Reveal>
+          ))}
         </div>
 
         {collaborators.length > 0 && (
-          <section className="collaborators">
+          <Reveal as="section" className="collaborators">
             <h2>Collaborators</h2>
             <ul>
               {collaborators.map((person) => (
@@ -96,8 +126,12 @@ function ProjectPage({ project }) {
                 </li>
               ))}
             </ul>
-          </section>
+          </Reveal>
         )}
+
+        <div className="story-back">
+          <a className="back-button" href="#projects">&larr; Back to all projects</a>
+        </div>
       </article>
 
       <footer className="footer page-width"><span>Kalista Oberes</span><a href="#projects">Back to projects</a></footer>

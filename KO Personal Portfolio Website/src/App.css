@@ -67,7 +67,7 @@ h2 { font: 500 clamp(37px, 5vw, 68px)/1 var(--display); letter-spacing: -2px; ma
 .experience-role + .experience-role { margin-top: 12px;}
 .experience-meta { display: flex; justify-content: space-between; gap: 20px; color: var(--lavender); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .7px; }
 .experience-role h3 { font: 600 28px/1.1 var(--display); margin: 12px 0; }
-.experience-role p { max-width: 620px; color: var(--muted); font: 14px/1.65 var(--sans); margin: 0 0 14px; }
+.experience-role p { color: var(--muted); font: 14px/1.65 var(--sans); margin: 0 0 14px; }
 .experience-role ul { display: grid; gap: 8px; list-style: none; padding: 0; }
 .experience-role li { color: var(--muted); font: 12px/1.5 var(--sans); }
 .experience-role li::before { content: '•'; color: #d8b928; margin-right: 8px; }
@@ -209,4 +209,110 @@ a.now-card:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 #e7cf50; c
 }
 @media (max-width: 640px) {
   .project-list { grid-template-columns: 1fr; }
+}
+
+/* cards */
+.project-card { position: relative; }
+.project-card-hit { position: absolute; inset: 0; z-index: 1; border: 0; border-radius: 24px; background: transparent; cursor: pointer; }
+.project-card-hit:focus-visible { outline: 2px solid #d8b928; outline-offset: 3px; }
+.project-actions a { position: relative; z-index: 2; }
+a.project-details-button { text-decoration: none; }
+.project-modal.no-image { grid-template-columns: 1fr; width: min(560px, 100%); }
+
+/* project page layout */
+.project-page { max-width: none; }
+.project-page-summary { max-width: 760px; }
+.story { gap: 72px; }
+.story-text { max-width: none; }
+.story-text p { font-size: 17px; }
+.story-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.story-split-left .story-photo { order: -1; }
+.story-photo { margin: 0; }
+.story-photo img { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid var(--line); }
+.story-photo figcaption { margin-top: 10px; color: var(--muted); font: 13px/1.5 var(--sans); }
+@media (max-width: 800px) {
+  .story-split { grid-template-columns: 1fr; gap: 24px; }
+  .story-split-left .story-photo { order: 0; }
+}
+
+/* back button */
+.back-button { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border: 1px solid #d8b928; border-radius: 12px; background: var(--yellow-soft); color: var(--ink); font: 600 13px var(--mono); letter-spacing: .8px; text-transform: uppercase; text-decoration: none; transition: background .2s ease, transform .2s ease; }
+.back-button:hover { background: #d8b928; color: var(--ink); transform: translateX(-2px); }
+.story-back { margin-top: 72px; }
+
+/* hamburger */
+.menu-toggle { display: none; }
+@media (max-width: 800px) {
+  .site-header { position: relative; }
+  .menu-toggle { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 0 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--yellow); cursor: pointer; }
+  .menu-toggle span { display: block; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .2s ease, opacity .2s ease; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  #site-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 10; flex-direction: column; gap: 0; padding: 8px 18px; background: var(--yellow); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 16px 16px; box-shadow: 0 12px 30px rgba(51, 40, 45, .12); }
+  #site-nav.open { display: flex; }
+  #site-nav a { padding: 16px 0; font-size: 13px; border-bottom: 1px solid var(--line); }
+  #site-nav a:last-child { border-bottom: 0; }
+}
+
+/* scroll reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* cards rise one after another once their section is visible */
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+.reveal.is-visible .project-card { animation: rise .6s ease backwards; }
+.reveal.is-visible .project-card:nth-child(3n + 2) { animation-delay: .1s; }
+.reveal.is-visible .project-card:nth-child(3n + 3) { animation-delay: .2s; }
+
+/* hero animates on page load */
+.intro h1, .intro-copy, .profile-photo, .button-link, .now-panel { animation: rise .7s ease backwards; }
+.intro-copy { animation-delay: .08s; }
+.profile-photo { animation-delay: .16s; }
+.now-panel { animation-delay: .2s; }
+.button-link { animation-delay: .24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal.is-visible .project-card, .intro h1, .intro-copy, .profile-photo, .button-link, .now-panel { animation: none; }
+}
+
+/* one style for every button: change these to recolor the whole site */
+:root {
+  --btn-bg: #fffdf7;
+  --btn-border: #d8b928;
+  --btn-bg-hover: #d8b928;
+  --btn-text: #33282d;
+}
+
+.button-link,
+.project-details-button,
+.project-links a,
+.social-links a,
+.back-button,
+.modal-close,
+.menu-toggle {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
+}
+
+.button-link:hover,
+.project-details-button:hover,
+.project-links a:hover,
+.social-links a:hover,
+.back-button:hover,
+.modal-close:hover,
+.menu-toggle:hover {
+  background: var(--btn-bg-hover);
+  border-color: var(--btn-border);
+  color: var(--btn-text);
+}
+
+/* gold -> arrows disappeared into the gold hover fill, so they go dark on hover */
+.button-link:hover span,
+.project-details-button:hover span,
+.project-links a:hover span,
+.social-links a:hover span {
+  color: var(--btn-text);
 }

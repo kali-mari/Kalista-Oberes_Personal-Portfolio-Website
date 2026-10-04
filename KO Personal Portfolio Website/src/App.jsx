@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import ProjectPage from './ProjectPage.jsx'
+import Reveal from './Reveal.jsx'
 
 function useHash() {
   const [hash, setHash] = useState(window.location.hash)
@@ -48,6 +49,11 @@ const experiences = [
     organization: 'Phi Sigma Rho Engineering Sorority Tau Chapter',
     roles: [
       {
+        title: 'Banquet Chair',
+        date: 'Aug. 2026 - Current',
+        description: 'Planning a formal banquet for 80+ members and guests, including venue selection, catering, and event logistics to celebrate the accomplishments of the chapter and its members at the end of the semester',
+      },
+      {
         title: 'VP Finance',
         date: 'May 2025 - May 2026',
         description: 'Owned a $52,000 annual operating budget for an 80+ member chapter, covering local chapter expenses for events and national dues',
@@ -66,6 +72,15 @@ const experiences = [
           'Resolved on-site logistics in real time, from room assignments to last-minute communication issues to ensure a smooth experience for all attendees',
         ],
       },
+      {
+        title: 'VP Social of Alpha Iota Class',
+        date: 'Jan. 2024 - May 2024',
+        description: 'Planned social events to build sisterhood between a 20-person new member class',
+        highlights: [
+          'Executed two social activities, including an on-campus movie night and off-campus outdoor day trip to a lake',
+          'Assisted fellow class officers with service event and class gift, staying within a $500 budget for all new class activities'
+        ]
+      }
     ],
   },
   {
@@ -87,8 +102,27 @@ const experiences = [
 const projects = [
 
 {
+  title: 'Senior Design Project',
+  slug: 'senior-design',
+  status: 'in-progress',
+  date: 'Aug. 2026 - Current',
+  description: 'Enrolled in EML4501 Mechanical Design II at UF, working in a team of 7 to design a mechanical system for biomedical manufacturing.',
+  longDescription: 'Enrolled in EML4501 Mechanical Design II at UF, working in a team of 7 to design a mechanical system for biomedical manufacturing.',
+  skills: ['SolidWorks', 'Microsoft Project'],
+  story: [
+    {
+      type: 'text',
+      heading: 'Project Overview',
+      body: `For my senior design project at the University of Florida, I am serving as the Team Lead for a group of seven mechanical engineering students. Our team is designing and building a machine capable of manufacturing 20 mm-tall spring-like Nitinol wire blockers for medical use in the lung, based on current research in minimally invasive device design. In this role, I keep the team aligned and on schedule, coordinate subsystem responsibilities, and guide major design decisions as we move from research into prototyping.\n\n
+          After studying the problem space and reviewing existing technologies for spring forming and medical-device manufacturing, we developed our engineering specifications and generated multiple concepts. We recently finalized our chosen concept and have begun translating it into a full CAD model, marking the start of our detailed design phase.`
+    }
+  ]
+},
+
+{
   title: 'SwampHacks XII',
   slug: 'swamphacks-xii',
+  status: 'in-progress',
   date: 'Oct. 2026',
   description: 'Competing in the Fall 2026 Swamphacks Hackathon at the University of Florida'
 },
@@ -185,7 +219,7 @@ const projects = [
       body: `This project taught me how to design mechanical systems for rapid prototyping while keeping hardware requirements in mind. Even though I wanted a more elaborate and robust design, a hackathon is not the best environment for complexity. Limited time to print and test meant I had to prioritize manufacturability and compatibility. Staying ahead of scope creep allowed us to achieve a partial prototype within the hackathon window.\n\n
             Another key takeaway was the importance of clear communication and shared terminology when collaborating with a team. By defining our terms and using sketches to illustrate our ideas, we were able to align on a common vision and move forward more effectively. One factor that made our project successful was having a team lead who acted as a systems engineer. Because they understood both the hardware and mechanical requirements, they served as a bridge between the two teams and prevented misalignment. Having a systems engineer was crucial in grounding the project and ensuring our designs remained compatible.`
     },
-    {type: 'video', youtubeID: 'h_uVNsXJl7M'}
+    {type: 'video', youtubeId: 'h_uVNsXJl7M'}
   ],
   githubUrl: 'https://github.com/annahudson356/lidar-sensor-hardware-hack-2026',
   websiteUrl: 'https://www.hackathonparty.com/hackathons/40/projects/471'
@@ -245,7 +279,7 @@ const projects = [
     heading: 'Lessons Learned',
     body: `I learned the fundamentals of mobile app development in React Native in a single weekend, including UI design, API integration, and real time data handling. I also gained a better understanding of how to scope a hackathon project and realized that with the right focus, you can accomplish far more in 36 hours than you expect.`
   },
-  
+
   { type: 'video', youtubeId: 'hejCKkAaBac'}
   ,
 
@@ -264,6 +298,10 @@ const skillGroups = [
 
 function ProjectCard({ project }) {
   const [isOpen, setIsOpen] = useState(false)
+  const skills = project.skills || []
+  const solutionMethods = project.solutionMethods || []
+  const results = project.results || []
+  const storyHref = project.slug ? `#/projects/${project.slug}` : null
 
   useEffect(() => {
     if (!isOpen) return undefined
@@ -279,57 +317,60 @@ function ProjectCard({ project }) {
   return (
     <>
       <article className="project-card">
-      <div className="project-card-body">
-        <div className="project-photo">
-          {project.image ? <img src={project.image} alt={`${project.title} preview`} /> : <span>Add project photo</span>}
-        </div>
-        <div className="project-card-details">
-          <div className="project-meta"><span>{project.category}</span><span>{project.date}</span></div>
-          <div className="project-heading"><h3>{project.title}</h3></div>
-          <p className="project-description">{project.description}</p>
-          <div className="project-section"><h4>Skills used</h4><div className="skills">{project.skills.map((skill) => <span key={skill}>{skill}</span>)}</div></div>
-          <div className="project-actions">
-            <button className="project-details-button" type="button" onClick={() => setIsOpen(true)}>View project details <span>-&gt;</span></button>
-            <div className="project-links">
-               {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
-                {(project.websiteUrl || project.liveUrl) && <a href={project.websiteUrl || project.liveUrl} target="_blank" rel="noreferrer">Project website <span>-&gt;</span></a>}
-                {project.slug && <a href={`#/projects/${project.slug}`}>Full project story <span>-&gt;</span></a>}
-            </div>
+        <div className="project-card-body">
+          <div className="project-photo">
+            {project.image ? <img src={project.image} alt={`${project.title} preview`} /> : <span>Coming Soon!</span>}
+          </div>
+          <div className="project-card-details">
+            <div className="project-meta"><span>{project.category}</span><span>{project.date}</span></div>
+            <div className="project-heading"><h3>{project.title}</h3></div>
+            <p className="project-description">{project.description}</p>
+            {skills.length > 0 && (
+              <div className="project-section">
+                <h4>Skills used</h4>
+                <div className="skills">{skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
+              </div>
+            )}
+            {storyHref && (
+              <div className="project-actions">
+                <a className="project-details-button" href={storyHref}>Full project story <span>-&gt;</span></a>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+        <button className="project-card-hit" type="button" aria-label={`View ${project.title} summary`} onClick={() => setIsOpen(true)} />
       </article>
-      {isOpen && <div className="project-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsOpen(false) }}>
-        <section className="project-modal" role="dialog" aria-modal="true" aria-labelledby={`${project.title}-modal-title`}>
-          <button className="modal-close" type="button" onClick={() => setIsOpen(false)} aria-label="Close project details">×</button>
-          <div className="modal-image-wrap">
-            {project.image ? <img src={project.image} alt={`${project.title} larger preview`} /> : <span>Add project photo</span>}
-          </div>
-          <div className="modal-content">
-            <div className="project-meta"><span>Project details</span><span>{project.date}</span></div>
-            <h2 id={`${project.title}-modal-title`}>{project.title}</h2>
-            <div className="modal-section"><h4>Project Description</h4><p className="modal-description">{project.longDescription || project.description}</p></div>
-            <div className="modal-section"><h4>Solution Methods</h4><ul>{project.solutionMethods.map((item) => <li key={item}>{item}</li>)}</ul></div>
-            <div className="modal-section"><h4>Results</h4><ul>{project.results.map((item) => <li key={item}>{item}</li>)}</ul></div>
-            <div className="project-links">
-              {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a>}
-                {(project.websiteUrl || project.liveUrl) && <a href={project.websiteUrl || project.liveUrl} target="_blank" rel="noreferrer">Project website <span>-&gt;</span></a>}
+
+      {isOpen && (
+        <div className="project-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setIsOpen(false) }}>
+          <section className={`project-modal${project.image ? '' : ' no-image'}`} role="dialog" aria-modal="true" aria-labelledby={`${project.title}-modal-title`}>
+            <button className="modal-close" type="button" onClick={() => setIsOpen(false)} aria-label="Close project details">×</button>
+            {project.image && (
+              <div className="modal-image-wrap">
+                <img src={project.image} alt={`${project.title} larger preview`} />
+              </div>
+            )}
+            <div className="modal-content">
+              <div className="project-meta"><span>Project details</span><span>{project.date}</span></div>
+              <h2 id={`${project.title}-modal-title`}>{project.title}</h2>
+              <div className="modal-section"><h4>Project Description</h4><p className="modal-description">{project.longDescription || project.description}</p></div>
+              {solutionMethods.length > 0 && <div className="modal-section"><h4>Solution Methods</h4><ul>{solutionMethods.map((item) => <li key={item}>{item}</li>)}</ul></div>}
+              {results.length > 0 && <div className="modal-section"><h4>Results</h4><ul>{results.map((item) => <li key={item}>{item}</li>)}</ul></div>}
+              {storyHref && (
+                <div className="project-links">
+                  <a href={storyHref}>Full project story <span>-&gt;</span></a>
+                </div>
+              )}
             </div>
-          </div>
-        </section>
-      </div>}
+          </section>
+        </div>
+      )}
     </>
   )
 }
 
 
 const NOW_UPDATED = 'Oct. 2026'
-// Upcoming events. `end` is 'YYYY-MM-DD'; the card hides itself after that day.
-// Leave `end` empty to keep it up. `date`, `location`, `note`, `url` are optional.
-const upcoming = [
-  { title: 'SwampHacks', date: 'Oct. 2026', location: '', note: '', end: '', url: '' },
-  { title: 'Senior Design Project', date: 'Aug. 2026 - Dec. 2026', location: '', note: '', end: '', url: '' }
-]
 
 function NowPanel() {
   const roles = experiences.flatMap((exp) =>
@@ -338,8 +379,6 @@ function NowPanel() {
       .map((role) => ({ ...role, organization: exp.organization }))
   )
   const building = projects.filter((p) => p.status === 'in-progress')
-  const today = new Date().toISOString().slice(0, 10)
-  const events = upcoming.filter((event) => !event.end || event.end >= today)
 
   return (
     <aside className="now-panel" aria-labelledby="now-title">
@@ -351,37 +390,18 @@ function NowPanel() {
       <div className="now-grid">
         {roles.map((role) => (
           <a className="now-card" href="#experience" key={role.title}>
-            <span className="now-label">Working</span>
             <h3>{role.organization}</h3>
             <p className="now-org">{role.title}</p>
-            <p>{role.description}</p>
           </a>
         ))}
 
         {building.map((project) => {
           const latest = [...(project.story || [])].reverse().find((b) => b.date)
-          const href = project.slug ? `#/projects/${project.slug}` : '#projects'
           return (
-            <a className="now-card" href={href} key={project.title}>
-              <span className="now-label">Building</span>
+            <a className="now-card" href="#projects" key={project.title}>
               <h3>{project.title}</h3>
-              <p>{project.description}</p>
               {latest && <p className="now-update">{latest.date} · {latest.heading}</p>}
             </a>
-          )
-        })}
-
-        {events.map((event) => {
-          const Tag = event.url ? 'a' : 'div'
-          const linkProps = event.url ? { href: event.url, target: '_blank', rel: 'noreferrer' } : {}
-          const when = [event.date, event.location].filter(Boolean).join(' · ')
-          return (
-            <Tag className="now-card" key={event.title} {...linkProps}>
-              <span className="now-label">Upcoming · {event.type}</span>
-              <h3>{event.title}</h3>
-              {when && <p className="now-org">{when}</p>}
-              {event.note && <p>{event.note}</p>}
-            </Tag>
           )
         })}
       </div>
@@ -392,6 +412,7 @@ function NowPanel() {
 function App() {
 
   const hash = useHash()
+  const [menuOpen, setMenuOpen] = useState(false)
   const slug = hash.match(/^#\/projects\/(.+)$/)?.[1]
   const activeProject = projects.find((p) => p.slug === slug)
 
@@ -406,7 +427,10 @@ function App() {
     <main>
       <header className="site-header page-width">
         <a className="logo" href="#top">KO<span>.</span></a>
-        <nav aria-label="Main navigation">
+        <button className="menu-toggle" type="button" aria-label="Menu" aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen(!menuOpen)}>
+          <span /><span /><span />
+        </button>
+        <nav id="site-nav" className={menuOpen ? 'open' : ''} aria-label="Main navigation" onClick={() => setMenuOpen(false)}>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
           <a href="#skills">Skills</a>
@@ -428,7 +452,7 @@ function App() {
         <NowPanel />
       </section>
 
-      <section className="experience page-width section" id="experience">
+      <Reveal as="section" className="experience page-width section" id="experience">
         <div className="experience-content">
           <h2>Experience</h2>
           <div className="experience-list">
@@ -438,21 +462,21 @@ function App() {
                 <div className="experience-meta"><span>{role.date}</span></div>
                 <h3>{role.title}</h3>
                 <p>{role.description}</p>
-                <ul>{role.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
+                <ul>{(role.highlights || []).map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
               </div>)}
             </article>)}
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="projects page-width section" id="projects">
+      <Reveal as="section" className="projects page-width section" id="projects">
         <div className="projects-content">
           <h2>My Projects</h2>
           <div className="project-list">{projects.map((project) => <ProjectCard key={project.title} project={project} />)}</div>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="skills-section page-width section" id="skills">
+      <Reveal as="section" className="skills-section page-width section" id="skills">
         <div className="skills-section-content">
           <h2>Skills</h2>
           <div className="skill-groups">
@@ -468,10 +492,10 @@ function App() {
             ))}
           </div>
         </div>
-      </section>
+      </Reveal>
 
 
-      <section className="about page-width section" id="about">
+      <Reveal as="section" className="about page-width section" id="about">
         <div className="about-content">
           <h2>About Me</h2>
           <div className="about-body">
@@ -492,15 +516,15 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="contact page-width section" id="contact">
+      <Reveal as="section" className="contact page-width section" id="contact">
         <div className="contact-content">
           <h2>Contact Me</h2>
           <p>I'd love to hear from you! Feel free to reach out.</p>
-          <div className="social-links contact-links"><a href={`mailto:${profile.email}`}>Email Me <span>-&gt;</span></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a><a href="https://www.linkedin.com/in/kalista-oberes/" target="_blank" rel="noreferrer">LinkedIn <span>-&gt;</span></a></div>
+          <div className="social-links contact-links"><a href={`mailto:${profile.email}`}>Email <span>-&gt;</span></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub <span>-&gt;</span></a><a href="https://www.linkedin.com/in/kalista-oberes/" target="_blank" rel="noreferrer">LinkedIn <span>-&gt;</span></a></div>
         </div>
-      </section>
+      </Reveal>
 
       <footer className="footer page-width"><span>{profile.name}</span><span>Built with React</span></footer>
     </main>
