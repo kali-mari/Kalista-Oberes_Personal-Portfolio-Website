@@ -130,7 +130,7 @@ const projects = [
 {
   title: 'OffTheCharts',
   slug: 'off-the-charts',
-  image: '/offthecharts.png',
+  image: '/projects/OffTheCharts/offthecharts-finalCLI.png',
   date: 'July 2026',
   description: 'Python CLI recommending songs by audio similarity — not popularity — across 90K Spotify tracks.',
   longDescription: 'OffTheCharts finds songs with similar audio characteristics to a track you already like, ignoring popularity and chart position entirely. Built as a Python CLI, it runs k-d tree and max-heap nearest-neighbor search over 90K Spotify tracks using attributes like tempo, energy, and instrumentalness.',
@@ -158,13 +158,17 @@ const projects = [
 
   {type: 'text',
     heading: 'Building the CLI Interface',
-    body: `Once the dataset was ready, I focused on building the command-line interface that users would interact with. I designed the CLI to feel intuitive and responsive, even with a dataset of over 90,000 tracks. To simplify searching, I integrated a real-time autocomplete feature using an existing library instead of building one from scratch. This approach saved development time and gave the interface a polished, professional feel.`
+    body: `Once the dataset was ready, I focused on building the command-line interface that users would interact with. I designed the CLI to feel intuitive and responsive, even with a dataset of over 90,000 tracks. To simplify searching, I integrated a real-time autocomplete feature using an existing library instead of building one from scratch. This approach saved development time and gave the interface a polished, professional feel.`,
+    image: '/projects/OffTheCharts/offthecharts-searchautocomplete.png',
+    caption: 'Real-time autocomplete when searching for songs and artists'
   },
 
   {type: 'text',
     heading: 'Accomplishments',
     body: `By the end of the project, we had a fully functional recommendation system capable of returning the top five most similar songs to any track in the dataset. The CLI I built made the tool easy to use, and the autocomplete feature significantly improved the user experience.\n\n
-    The feature vector design I implemented allowed the system to surface niche tracks that popularity-based algorithms would never recommend. Seeing the recommendations match our expectations was one of the most rewarding parts of the project.`
+    The feature vector design I implemented allowed the system to surface niche tracks that popularity-based algorithms would never recommend. Seeing the recommendations match our expectations was one of the most rewarding parts of the project.`,
+    image: '/projects/OffTheCharts/offthecharts-finalCLI.png',
+    caption: 'Final CLI and most similar tracks display'
   },
 
   {type: 'text',
@@ -181,7 +185,7 @@ const projects = [
 {
   title: '3D LiDAR Scanner',
   slug: '3d-lidar-scanner',
-  image: '/3D-LiDAR.jpg',
+  image: '/projects/3D-LiDAR/3D-LiDAR-prototype.jpg',
   date: 'Mar. 2026',
   description: 'Lightweight, low-cost, 3D-printable LiDAR scanner with a two-axis servo and stepper motor positioning system.',
   longDescription: 'Designed a low-cost system mounting a Garmin LiDAR-Lite sensor on a two-axis gimbal to perform 3D scans of a space and visualize the output as a point cloud in Unity in 24 hours for the 2026 UF Association of Applied Computing Hackathon.',
@@ -207,17 +211,27 @@ const projects = [
     {type: 'text',
       heading: 'Mechanical Design',
       body: `The mechanical design needed to be simple, fast to fabricate, and easy to iterate within the 24‑hour hackathon window. Because print time directly limited how many redesigns we could attempt, we focused on creating geometries that were lightweight and optimized for rapid 3D printing. At the same time, the structure had to integrate cleanly with the hardware team’s electronics, so we avoided complex assemblies and ensured that all mounting points aligned directly with the motors and LiDAR unit.\n\n
-            A key functional requirement was achieving two axes of motion to enable full 3D scanning rather than a basic 2D sweep. The pitch axis was obtained by mounting the LiDAR directly onto a servo, giving us a straightforward and reliable way to control vertical rotation. For yaw, we designed a pair of 3D‑printed gears with a 1:1 gear ratio. This kept the mechanism simple and allowed the motor’s rotation to correspond directly to the LiDAR’s yaw angle without additional gearing calculations or compensation in software.`
+            A key functional requirement was achieving two axes of motion to enable full 3D scanning rather than a basic 2D sweep. The pitch axis was obtained by mounting the LiDAR directly onto a servo, giving us a straightforward and reliable way to control vertical rotation. For yaw, we designed a pair of 3D‑printed gears with a 1:1 gear ratio. This kept the mechanism simple and allowed the motor’s rotation to correspond directly to the LiDAR’s yaw angle without additional gearing calculations or compensation in software.`,
+      image: '/projects/3D-LiDAR/3D-LiDAR-onshapemodel.png',
+      caption: 'CAD model of mechanical system'
     },
     {type: 'text',
       heading: 'Accomplishments',
       body: `By the end of the hackathon, we had a partially working prototype that demonstrated the core functionality of our 3D scanning system. We were able to show both pitch and yaw motion and visualize the LiDAR’s distance data in Unity as a point cloud. However, we ran out of time to fully test the mechanical design, and the 3D‑printed gears did not have enough tolerance to rotate smoothly on the axles built into the printed housing. \n\n
             After the hackathon, we revisited the design and created a fully functional prototype. We redesigned the gears with increased tolerance and printed a more robust housing to better support the axles. The updated assembly achieved smooth rotation and accurate scanning, demonstrating the potential of our low‑cost, 3D‑printable LiDAR scanner.`
     },
+    {type: 'gallery',
+      images: [
+        { src: '/projects/3D-LiDAR/3D-LiDAR-prototype.jpg', caption: 'End of hackathon prototype' },
+        { src: '/projects/3D-LiDAR/3D-LiDAR-pointclouddemo.jpeg', caption: 'Point cloud demo in Unity' }
+      ]
+      
+    },
     {type: 'text',
       heading: 'Lessons Learned',
       body: `This project taught me how to design mechanical systems for rapid prototyping while keeping hardware requirements in mind. Even though I wanted a more elaborate and robust design, a hackathon is not the best environment for complexity. Limited time to print and test meant I had to prioritize manufacturability and compatibility. Staying ahead of scope creep allowed us to achieve a partial prototype within the hackathon window.\n\n
-            Another key takeaway was the importance of clear communication and shared terminology when collaborating with a team. By defining our terms and using sketches to illustrate our ideas, we were able to align on a common vision and move forward more effectively. One factor that made our project successful was having a team lead who acted as a systems engineer. Because they understood both the hardware and mechanical requirements, they served as a bridge between the two teams and prevented misalignment. Having a systems engineer was crucial in grounding the project and ensuring our designs remained compatible.`
+            Another key takeaway was the importance of clear communication and shared terminology when collaborating with a team. By defining our terms and using sketches to illustrate our ideas, we were able to align on a common vision and move forward more effectively. One factor that made our project successful was having a team lead who acted as a systems engineer. Because they understood both the hardware and mechanical requirements, they served as a bridge between the two teams and prevented misalignment. Having a systems engineer was crucial in grounding the project and ensuring our designs remained compatible.`,
+      image: '/projects/3D-LiDAR/3D-LiDAR-teamphoto.jpeg',
     },
     {type: 'video', youtubeId: 'h_uVNsXJl7M'}
   ],
@@ -228,7 +242,7 @@ const projects = [
 {
   title: 'MyFlowFriend',
   slug: 'myflowfriend',
-  image: '/myflowfriend.jpg',
+  image: '/projects/MyFlowFriend/myflowfriend-title.jpg',
   date: 'Feb. 2026',
   description: 'Tamagotchi-inspired period-tracking device that logs daily menstrual symptoms via an ESP32 microcontroller, paired with a mobile app that visualizes long-term health trends.',
   longDescription: 'Created in 36 hours for the 2026 WiNGHacks hackathon, MyFlowFriend pairs a Tamagotchi-inspired Wi-Fi device with a React Native companion app. Users can track symptoms over 30 days, view their history in a calendar-style interface, and receive AI-assisted cycle forecasts and health answers.',
@@ -254,14 +268,18 @@ const projects = [
     type: 'text',
     heading: 'Determining the Tech Stack',
     body: `Since this was my first hackathon, I started by building the mobile app. After researching beginner friendly options, React Native stood out as the easiest way to get a cross platform app running quickly. We wanted the app to update automatically whenever users logged symptoms on the hardware companion, so Firebase became the natural choice for the backend because of its real time syncing.\n\n
-          Because this was the first mobile app I had ever built, working with API calls for Firebase and Gemini Flash was completely new to me. Once I learned how to make those calls reliably, we integrated Gemini Flash 2.5 to serve as a conversational chatbot and to generate future cycle forecasts, a feature included in most menstrual tracking apps.`
+          Because this was the first mobile app I had ever built, working with API calls for Firebase and Gemini Flash was completely new to me. Once I learned how to make those calls reliably, we integrated Gemini Flash 2.5 to serve as a conversational chatbot and to generate future cycle forecasts, a feature included in most menstrual tracking apps.`,
+    image: `/projects/MyFlowFriend/myflowfriend-homescreen.jpg`,
+    caption: `Mobile app homescreen`
   },
 
   {
     type: 'text',
     heading: 'Designing the Mobile App',
     body: `The mobile app uses a pastel, Y2K inspired aesthetic based on the era when Tamagotchis were popular. Each symptom category — flow, pain, sleep, and mood — has its own page with a 30 day grid showing the user’s entries. Designing this interface taught me a lot about mobile UI patterns, visual hierarchy, and how to make health data feel approachable rather than clinical.\n\n
-          Because this was my first mobile app, I ran into several issues while integrating Firebase and Gemini Flash. Debugging API calls became a major part of the design process — from handling asynchronous updates to making sure the app refreshed symptom data the moment the hardware device sent new logs. Working through those challenges helped me understand how the frontend and backend communicate and how to design screens that respond smoothly to real time data.`
+          Because this was my first mobile app, I ran into several issues while integrating Firebase and Gemini Flash. Debugging API calls became a major part of the design process — from handling asynchronous updates to making sure the app refreshed symptom data the moment the hardware device sent new logs. Working through those challenges helped me understand how the frontend and backend communicate and how to design screens that respond smoothly to real time data.`,
+    image: `/projects/MyFlowFriend/myflowfriend-healthchat.png`,
+    caption: 'Health chatbot powered by Gemini Flash'
   },
 
   {
@@ -271,13 +289,16 @@ const projects = [
           The mobile app included display screens for all four symptoms, generated cycle predictions, and demonstrated the chatbot functionality. On the hardware side, my teammate built a Tamagotchi inspired device using an ESP32 that let users log symptoms through simple daily interactions. The device sent each entry over WiFi to Firebase, where my app immediately pulled and displayed the updated data. Seeing both components sync instantly was one of the most rewarding moments of the weekend. \n\n
           Even though the hardware added a fun, nostalgic element to the project, the mobile app became the central place where users could see and understand their health data. The UI, cycle predictions, and chatbot features tied the whole experience together and made the hardware feel purposeful rather than just playful. \n\n
           We also outlined several improvements we want to make to the hardware moving forward. We plan to design and 3D print a portable, ergonomic housing for the device, and eventually power it with a 3.7V Li Po battery paired with a TP4056 charge and protection module. These upgrades would make the Tamagotchi fully portable and rechargeable, strengthening the connection between the physical device and the mobile app.\n\n
-          Beyond the technical milestones, we had created a project that we would want to use. Our demo resonated with judges and attendees, and we ultimately took home the Women Centric Track award.`
+          Beyond the technical milestones, we had created a project that we would want to use. Our demo resonated with judges and attendees, and we ultimately took home the Women Centric Track award.`,
+    image: `/projects/MyFlowFriend/myflowfriend-predict.png`,
+    caption: `Cycle prediction screen`
   },
 
   {
     type: 'text',
     heading: 'Lessons Learned',
-    body: `I learned the fundamentals of mobile app development in React Native in a single weekend, including UI design, API integration, and real time data handling. I also gained a better understanding of how to scope a hackathon project and realized that with the right focus, you can accomplish far more in 36 hours than you expect.`
+    body: `I learned the fundamentals of mobile app development in React Native in a single weekend, including UI design, API integration, and real time data handling. I also gained a better understanding of how to scope a hackathon project and realized that with the right focus, you can accomplish far more in 36 hours than you expect.`,
+    image: `/projects/MyFlowFriend/myflowfriend-teamphoto.jpeg`,
   },
 
   { type: 'video', youtubeId: 'hejCKkAaBac'}
