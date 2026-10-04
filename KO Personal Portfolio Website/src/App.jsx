@@ -17,9 +17,10 @@ const profile = {
   role: 'Mechanical Engineer',
   intro: '4th year student at UF studying mechanical engineering and computer science.',
   bio: [
-    'I got my start in engineering on robotics teams, which I began competing on in elementary school. Currently, I am a senior at the University of Florida majoring in mechanical engineering and minoring in computer science. I am passionate about finding ways to combine these two fields to create innovative solutions.',
-    'Supporting women in STEM has always been important to me, and I have been involved in the Phi Sigma Rho Engineering Sorority in various leadership roles.',
-    'Outside of school, I enjoy finding the best local restaurants, karaoking with my friends, and teaching myself how to play guitar.',
+  "I fell in love with robotics after joining a FIRST LEGO League team when I was nine years old. Competing in FIRST Tech Challenge and taking STEM courses throughout middle and high school solidified that passion, and I quickly became fascinated by the mechanical side of robotics and the problem‑solving challenges it presented. That curiosity ultimately led me to study mechanical engineering at the University of Florida.",
+  "As someone who benefitted directly from organizations that encouraged young girls to stay involved in engineering, supporting women in STEM has always been important to me. At UF, I have been involved in the Phi Sigma Rho Engineering Sorority since my freshman year, serving in multiple leadership roles and helping foster a supportive community for women in engineering on campus.",
+  "Right now, I’m focused on becoming a well‑rounded engineer capable of seamlessly integrating mechanical design, hardware prototyping, and software development. My ultimate goal is to pursue a career in an interdisciplinary field such as robotics or mechatronics. Through my coursework and hackathon projects, I’ve honed my ability to merge mechanical and software skills effectively, and my leadership roles and experience as a project management intern have strengthened my teamwork, communication, and organizational abilities.",
+  "Outside of school, I enjoy discovering new restaurants around town, unwinding at karaoke nights with friends, and teaching myself guitar one song at a time."
   ],
   linkedin: 'https://www.linkedin.com/in/kalista-oberes/',
   github: 'https://github.com/kali-mari',
@@ -84,6 +85,14 @@ const experiences = [
 ]
 
 const projects = [
+
+{
+  title: 'SwampHacks XII',
+  slug: 'swamphacks-xii',
+  date: 'Oct. 2026',
+  description: 'Competing in the Fall 2026 Swamphacks Hackathon at the University of Florida'
+},
+
 {
   title: 'OffTheCharts',
   slug: 'off-the-charts',
