@@ -188,7 +188,7 @@ const projects = [
   image: '/projects/3D-LiDAR/3D-LiDAR-prototype.jpg',
   date: 'Mar. 2026',
   description: 'Lightweight, low-cost, 3D-printable LiDAR scanner with a two-axis servo and stepper motor positioning system.',
-  longDescription: 'Designed in 24 hours for the innagural UF Association of Applied Computing and Engineering hackathon, this low-cost system uses a Garmin LiDAR-Lite sensor mounted on a two-axis mechanical system to perform 3D scans of a space and visualizes the output as a point cloud in Unity.',
+  longDescription: 'Built during a 24‑hour sprint at the inaugural UF Association of Applied Computing and Engineering hackathon, this low‑cost prototype integrates a Garmin LiDAR‑Lite sensor with a 3D-printable two‑axis mechanical assembly to perform full 3D environmental scans, rendering the output as a real‑time point cloud in Unity.',
   skills: ['Onshape', '3D Printing'],
   solutionMethods: [
     'Modeled the FDM components in Onshape with manufacturability and low print time in mind',
