@@ -10,15 +10,17 @@ Personal portfolio site built with React + Vite. Showcases about me, experience,
 ## Project Structure
 ```
 src/
-  App.jsx        # main page content and components
-  App.css        # site styles
-  main.jsx       # app entry point
-  ProjectPage.jsx # full project story page (per-project route)
-index.css       # global styles
+  App.jsx          # main page content and components
+  App.css          # site styles
+  main.jsx         # app entry point
+  ProjectPage.jsx  # full project story page (per-project route)
+  Reveal.jsx       # scroll-in animation wrapper
+index.css          # global styles
 public/
-  Profile.jpg       # intro section photo
+  Profile.jpg        # intro section photo
   about-photo.jpg    # About Me section photo
-  [project images]   # referenced in the projects array in App.jsx
+  projects/<slug>/   # story-page photos, one folder per project
+  [card thumbnails]  # referenced by `image` in the projects array in App.jsx
 ```
 
 ## Editing the site
@@ -52,40 +54,39 @@ Experiences are grouped by `organization`, each with one or more `roles`. To add
 }
 ```
 
-To add a new organization, add a new object with `organization` and a `roles` array to the `experiences` list. Each role needs `title`, `date`, `description`, and a `highlights` array of bullet points.
+To add a new organization, add a new object with `organization` and a `roles` array to the `experiences` list. Each role needs `title`, `date`, and `description`. `highlights` is an optional array of bullet points. A role whose `date` contains the word "Current" also shows up in the Right Now panel.
 
 ### Adding a project
 
-Add an object to the `projects` array. Required fields:
+Add an object to the `projects` array. A project with only these fields still renders:
 
 | Field | What it's for |
 |---|---|
 | `title` | Project name |
-| `image` | Path to the thumbnail, e.g. `/myproject.jpg` — file goes in `public/` |
 | `date` | Shown in the card meta line |
 | `description` | Short summary shown on the card |
-| `skills` | Array of skill tags shown on the card |
-| `githubUrl` | Optional — omit or leave `''` to hide the GitHub link |
-| `websiteUrl` | Optional — omit or leave `''` to hide the live site link |
+| `slug` | URL segment, e.g. `'offthecharts'` → page lives at `#/projects/offthecharts`. Omit it and the "Full project story" button won't appear. |
 
-The pop-up (quick-glance modal) also needs:
+Everything else is optional, and anything you leave out is hidden instead of breaking the page:
 
 | Field | What it's for |
 |---|---|
-| `longDescription` | Longer version of the description, shown in the modal |
-| `solutionMethods` | Array of bullet points — how you approached it |
-| `results` | Array of bullet points — outcomes |
+| `image` | Card thumbnail, e.g. `/myproject.jpg` — file goes in `public/`. Without it the card shows a placeholder. |
+| `skills` | Array of skill tags shown on the card and the story page |
+| `longDescription` | Longer description shown in the pop-up |
+| `solutionMethods` | Array of bullet points in the pop-up — how you approached it |
+| `results` | Array of bullet points in the pop-up — outcomes |
+| `status` | `'in-progress'` lists the project under "Building" in the Right Now panel |
+| `githubUrl` | GitHub link, shown on the story page only. Omit or leave `''` to hide it. |
+| `websiteUrl` | Live site / Devpost link, shown on the story page only. Omit or leave `''` to hide it. |
+| `story` | Array of content blocks for the story page (see below) |
+| `collaborators` | Array of teammates (see below) |
 
-For the full project story page, add:
+**How cards behave.** Clicking anywhere on a card opens the pop-up summary. The card and the pop-up each have a "Full project story" button that goes to the story page. GitHub and project-website links appear only on the story page.
 
-| Field | What it's for |
-|---|---|
-| `slug` | URL segment, e.g. `'offthecharts'` → page lives at `#/projects/offthecharts`. Omit and the "Full project story" link won't appear. |
-| `status` | `'completed'` or `'in-progress'` — shows a badge on the card |
-| `story` | Array of content blocks, in the order they should appear (see below) |
-| `collaborators` | Optional array of teammates (see below) |
+### Story blocks
 
-**Story blocks.** Each entry in `story` is one of four types:
+Each entry in `story` is one of four types:
 
 ```js
 story: [
@@ -99,12 +100,55 @@ story: [
 ]
 ```
 
-- `text` blocks take an optional `date` field (e.g. `'Sep. 2026'') for logging progress over time — use this for in-progress projects, adding a new block each time there's an update.
+- `text` blocks take an optional `date` field (e.g. `'Sep. 2026'`) for logging progress over time — use this for in-progress projects, adding a new block each time there's an update.
+- `text` blocks can also carry a photo (see below).
 - `heading` and `caption` are optional on every block type.
-- `youtubeId` is the part of the URL after `v=` — works with unlisted videos.
-- Photos go in `public/projects/<slug>/`. Keep them around 1600px wide before uploading; full-size phone photos slow the page down.
+- `youtubeId` is the part of the URL after `v=` — works with unlisted videos. The key is spelled `youtubeId`, with a lowercase d. `youtubeID` shows nothing.
 
-**Collaborators.** Optional — leave the field out entirely if a project has none:
+### Adding images to a Full Project page
+
+**1. Put the files in the project's folder.** Make `public/projects/<slug>/`, using the same slug as the project, and drop the photos in. Example: `public/projects/3d-lidar-scanner/gimbal.jpg`.
+
+**2. Reference them from the story with a path that starts at `/projects/`.** Leave out `public`: `/projects/3d-lidar-scanner/gimbal.jpg`.
+
+**3. Pick where the photo goes.**
+
+*Beside a section of text.* Add `image` to a `text` block. `caption` and `alt` are optional:
+
+```js
+{
+  type: 'text',
+  heading: 'Mechanical Design',
+  body: 'The pitch axis is a servo...\n\nFor yaw, a pair of 1:1 gears...',
+  image: '/projects/3d-lidar-scanner/gimbal.jpg',
+  caption: 'Pitch and yaw gimbal',
+  alt: 'Two-axis gimbal holding the LiDAR sensor',
+}
+```
+
+- The photo takes half the row and the text takes the other half.
+- Photos alternate sides automatically: the first photo is on the right, the second on the left, and so on.
+- Only sections with a photo count toward the alternation. A text block with no `image` runs the full width of the page and doesn't affect which side the next photo lands on.
+- On phones, every photo stacks under its text.
+
+*Full-width, on its own.* Use an `image` block:
+
+```js
+{ type: 'image', src: '/projects/3d-lidar-scanner/point-cloud.png', caption: 'Point cloud in Unity' }
+```
+
+*Several photos in a row.* Use a `gallery` block (see the example above). Gallery photos are cropped to a 4:3 frame, so keep the subject near the center.
+
+**Photo tips.**
+- Resize to about 1600px wide before uploading. Full-size phone photos slow the page down.
+- Use `.jpg`, `.png`, or `.webp`. Browsers don't display `.heic`, so convert iPhone photos first.
+- File names are case-sensitive on the live site. `Gimbal.jpg` and `gimbal.jpg` are different files, even if both work on your computer.
+- Skip spaces in file names. Use `point-cloud.png`, not `point cloud.png`.
+- A photo that shows a broken-image icon almost always has a wrong path or a case mismatch.
+
+### Collaborators
+
+Optional — leave the field out entirely if a project has none:
 
 ```js
 collaborators: [
@@ -113,6 +157,20 @@ collaborators: [
 ```
 
 `role`, `github`, and `linkedin` are each optional per person.
+
+### Scroll animations
+
+The intro section animates on page load in CSS. The other homepage sections and the story-page blocks fade in as they scroll into view. To animate a new section or block, swap its tag for `Reveal`:
+
+```jsx
+import Reveal from './Reveal.jsx'
+
+<Reveal as="section" className="my-section page-width section" id="my-section">
+  ...
+</Reveal>
+```
+
+`as` sets the HTML tag (default `div`) and `delay={150}` waits 150ms before starting. Visitors with reduced motion turned on in their OS see no animation.
 
 ## Deployment
 Deployed via Hostinger
