@@ -132,7 +132,7 @@ const projects = [
   slug: 'off-the-charts',
   image: '/projects/OffTheCharts/offthecharts-finalCLI.png',
   date: 'July 2026',
-  description: 'Python CLI recommending songs by audio similarity — not popularity — across 90K Spotify tracks.',
+  description: 'Python CLI recommending songs by audio similarity, not popularity, across 90K Spotify tracks.',
   longDescription: 'OffTheCharts finds songs with similar audio characteristics to a track you already like, ignoring popularity and chart position entirely. Built as a Python CLI, it runs k-d tree and max-heap nearest-neighbor search over 90K Spotify tracks using attributes like tempo, energy, and instrumentalness.',
   skills: ['Python', 'Git', 'NumPy', 'pandas', 'prompt_toolkit'],
   solutionMethods: [
@@ -147,7 +147,7 @@ const projects = [
   story: [
   {type: 'text',
     heading: 'The Idea',
-    body: `This project was for the Data Structures and Algorithms course at UF. The assignment required us to implement two data structures to parse a large dataset and compare their efficiency. After exploring publicly available datasets and proposing different ideas, our team decided to use a Spotify dataset. We were frustrated with how most music recommendation algorithms prioritize popularity, pushing mainstream songs and artists to the top of every list. We wanted to build a recommendation system that surfaced songs based on audio similarity rather than chart position, helping users discover new music they might not have found otherwise.`
+    body: `This project was for the COP3530 Data Structures and Algorithms course at UF. The assignment required us to implement two data structures to parse a large dataset and compare their efficiency. After exploring publicly available datasets and proposing different ideas, our team decided to use a Spotify dataset. We were frustrated with how most music recommendation algorithms prioritize popularity, pushing mainstream songs and artists to the top of every list. We wanted to build a recommendation system that surfaced songs based on audio similarity rather than chart position, helping users discover new music they might not have found otherwise.`
   },
 
   {type: 'text',
@@ -188,7 +188,7 @@ const projects = [
   image: '/projects/3D-LiDAR/3D-LiDAR-prototype.jpg',
   date: 'Mar. 2026',
   description: 'Lightweight, low-cost, 3D-printable LiDAR scanner with a two-axis servo and stepper motor positioning system.',
-  longDescription: 'Designed a low-cost system mounting a Garmin LiDAR-Lite sensor on a two-axis gimbal to perform 3D scans of a space and visualize the output as a point cloud in Unity in 24 hours for the 2026 UF Association of Applied Computing Hackathon.',
+  longDescription: 'Designed in 24 hours for the innagural UF Association of Applied Computing and Engineering hackathon, this low-cost system uses a Garmin LiDAR-Lite sensor mounted on a two-axis mechanical system to perform 3D scans of a space and visualizes the output as a point cloud in Unity.',
   skills: ['Onshape', '3D Printing'],
   solutionMethods: [
     'Modeled the FDM components in Onshape with manufacturability and low print time in mind',
@@ -465,7 +465,7 @@ function App() {
           <h1>Hi, I&apos;m <span>{profile.name.split(' ')[0]}.</span></h1>
           <p className="intro-copy">{profile.intro}</p>
           <div className="profile-photo">
-            <img src="/Profile.jpg" alt={`${profile.name} portrait`} onError={(event) => { event.currentTarget.style.display = 'none' }} />
+            <img src="/Profile.png" alt={`${profile.name} portrait`} onError={(event) => { event.currentTarget.style.display = 'none' }} />
             <span>Add your photo at<br /><strong>public/profile.jpg</strong></span>
           </div>
           <a className="button-link" href="#projects">See my projects <span>-&gt;</span></a>
