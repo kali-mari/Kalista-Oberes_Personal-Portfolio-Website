@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap');
-
 /* ============ tokens ============ */
 :root {
   --yellow: #fffdf7;
@@ -25,7 +23,7 @@
 }
 
 /* ============ base ============ */
-* { box-sizing: border-box; }
+html { scroll-padding-top: 90px; }
 body { background: var(--yellow); color: var(--ink); }
 main { min-height: 100vh; background: var(--yellow); }
 a { color: inherit; }
@@ -53,7 +51,8 @@ nav a, h4, .footer { font: 11px var(--mono); text-transform: uppercase; letter-s
 .contact-content > h2::after { content: ''; display: block; width: 66px; height: 4px; margin: 22px auto 0; background: var(--gold-light); }
 
 /* ============ header & nav ============ */
-.site-header { height: 86px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
+.site-bar { position: sticky; top: 0; z-index: 15; background: var(--yellow); border-bottom: 1px solid var(--line); }
+.site-header { position: relative; height: 86px; display: flex; justify-content: space-between; align-items: center; }
 .logo { font: 600 27px/1 var(--display); letter-spacing: -1px; text-decoration: none; }
 .logo span { color: var(--gold); }
 nav { display: flex; gap: 28px; }
@@ -101,8 +100,7 @@ nav a:hover { color: var(--gold-dark); }
 
 .profile-photo { width: 100%; max-width: 440px; height: 320px; margin-top: 32px; display: grid; place-items: center; position: relative; overflow: hidden; border-radius: 24px; color: var(--gold-text); text-align: center; }
 .profile-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.profile-photo span, .about-photo span { font: 11px/1.7 var(--mono); text-transform: uppercase; letter-spacing: .7px; }
-.profile-photo strong, .about-photo strong { color: var(--gold-text); font-weight: 500; }
+.photo-fallback { display: grid; place-items: center; width: 100%; height: 100%; background: var(--photo-bg); color: var(--gold-text); font: 11px/1.7 var(--mono); text-transform: uppercase; letter-spacing: .7px; }
 
 /* ============ Right Now panel ============ */
 .now-panel { align-self: center; padding: 26px; border: 1px solid var(--line); border-radius: 28px; background: var(--yellow-soft); box-shadow: 8px 8px 0 var(--gold-light); }
@@ -173,10 +171,13 @@ a.now-card:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--gold
 
 /* ============ about ============ */
 .about-content { max-width: 920px; margin: 0 auto; }
-.about-body { display: grid; grid-template-columns: minmax(260px, .85fr) minmax(300px, 1fr); gap: 70px; align-items: center; }
-.about-photo { width: min(100%, 300px); margin-bottom: 36px; border-radius: 24px; overflow: hidden; }
+.about-body { display: grid; grid-template-columns: 300px 1fr; gap: 56px; align-items: center; }
+.about-photo { width: 100%; max-width: 300px; border-radius: 24px; overflow: hidden; }
 .about-photo img { width: 100%; height: auto; display: block; }
+.about-photo .photo-fallback { height: auto; aspect-ratio: 4 / 5; }
 .bio-copy p, .contact-content > p { max-width: 390px; color: var(--muted); font: 15px/1.75 var(--sans); margin: 0 0 20px; }
+.bio-copy p { max-width: none; font-size: 16px; }
+.bio-copy p:last-child { margin-bottom: 0; }
 
 /* ============ contact & footer ============ */
 .contact-content { max-width: 760px; margin: 0 auto; text-align: center; }
@@ -255,10 +256,9 @@ a.now-card:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--gold
   html { scroll-padding-top: 80px; }
   .page-width { width: min(100% - 36px, 560px); }
   .section { padding: 70px 0 85px; }
-  .about { padding-bottom: 45px; }
 
-  /* header stays pinned so the menu is always reachable */
-  .site-header { position: sticky; top: 0; z-index: 15; height: 70px; background: var(--yellow); }
+  /* the sticky bar keeps the menu reachable; the nav drops down from the header */
+  .site-header { height: 70px; }
   .menu-toggle { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 0 11px; border-radius: 10px; cursor: pointer; }
   .menu-toggle span { display: block; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .2s ease, opacity .2s ease; }
   .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -280,7 +280,7 @@ a.now-card:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--gold
 
   .about-content > h2 { margin-bottom: 32px; }
   .about-body { display: block; }
-  .about-photo { height: 330px; margin: 0 auto 36px; display: grid; place-items: center; position: relative; text-align: center; color: var(--gold-text); }
+  .about-photo { width: min(100%, 260px); margin: 0 auto 32px; }
 
   .skill-groups { grid-template-columns: 1fr; gap: 22px; }
   .experience-role h3 { font-size: 24px; }
